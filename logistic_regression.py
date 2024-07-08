@@ -26,4 +26,16 @@ def compute_cost_and_gradient(X, y, w, b):
     db = db/m
 
     return cost, dw , db
+
+
+def predict(X, w, b):
+    m = X.shape[0]
+    prediction = np.zeros(m)
+
+    for i in range(m):
+        z_i = np.dot(X[i], w)+b
+        f_wb_i = sigmoid(z_i)
+        prediction[i] = 1 if f_wb_i > 0.5 else 0
+
+    return prediction
     
