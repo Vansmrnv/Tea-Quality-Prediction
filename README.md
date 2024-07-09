@@ -18,8 +18,7 @@ The logistic regression model uses these features to predict whether the tea is 
 ## Repository Structure
 
 - `data/`: Contains the dataset used for training and testing.
-- `src/`: Contains the source code for the logistic regression model.
-- `notebooks/`: Jupyter notebooks demonstrating the step-by-step implementation and results.
+- `src/`: Contains the source code for the logistic regression model and the step-by-step implementation and results.
 - `images/`: Visualizations and plots related to the project.
 - `README.md`: Overview and instructions for the project.
 
