@@ -8,8 +8,8 @@ This project demonstrates the use of logistic regression to predict the quality 
 
 - **water_temperature**: Temperature of the water used (in degrees Celsius).
 - **steeping_time**: Time for which the tea is steeped (in minutes).
-- **milk**: Whether milk is added (1 for yes, 0 for no).
-- **sugar**: Whether sugar is added (1 for yes, 0 for no).
+- **milk**: Whether milk is added (1 for yes, 0 for no). !!IN DEVELOPMENT!!
+- **sugar**: Whether sugar is added (1 for yes, 0 for no). !!IN DEVELOPMENT!!
 
 ## Model
 
