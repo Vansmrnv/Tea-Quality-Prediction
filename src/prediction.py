@@ -16,7 +16,7 @@ X = (X - np.mean(X, axis=0)) / np.std(X, axis=0)
 ## Step 3: Initialize Parameters
 w = np.zeros(X.shape[1])
 b = 0
-alpha = 0.1
+alpha = 1
 num_iterations = 1000
 
 ## Step 4: Train Model
