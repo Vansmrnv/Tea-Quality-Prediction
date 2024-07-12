@@ -27,7 +27,7 @@ w = np.zeros(X_poly.shape[1])
 b = 0
 alpha = 1
 num_iterations = 1000
-lambda_ = -0.1 #Regularized to make the boundary fit better (spoiler: it is overfitting a bit) in order not to overfit lambda_ has to be 0
+lambda_ = 0 #Regularized to make the boundary fit better (spoiler: it is overfitting a bit) in order not to overfit lambda_ has to be 0
 
 # Train Model
 w, b, cost_history = gradient_descent(X_poly, y, w, b, alpha, num_iterations, lambda_)
