@@ -3,6 +3,10 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder 
+from sklearn.compose import ColumnTransformer
+import matplotlib.pyplot as plt
 
 model = Sequential([
   Dense(units=8, activation='relu'),
