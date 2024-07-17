@@ -1,19 +1,20 @@
 import tensorflow as tf
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.regularizers import L2
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer   
 import matplotlib.pyplot as plt
-from tensorflow.keras.utils import build_models
+#from tensorflow.keras.utils import build_models
 
 # Load Data
-data = pd.read_csv('data/tea_datas.csv')
+data = pd.read_csv('data/tea_data500.csv')
 
 # Define features and target
-X = data[['water_temperature', 'steeping_time', 'milk', 'sugar']]
+X = data[['water_temperature', 'steeping_time']]
 y = data['tea_made_correctly']
 
 y = np.expand_dims(y, axis=1)
@@ -42,32 +43,36 @@ X_test_scaled = scaler.fit_transform(X_test)
 nn_train_error = []
 nn_cv_error = []
 
-models = tf.keras.utils.build_models()
+model = Sequential([
+    Dense(units=25, activation='relu', kernel_regularizer=L2(0.01)),
+    Dense(units=15, activation='relu', kernel_regularizer=L2(0.01)),
+    Dense(units=1, activation='sigmoid', kernel_regularizer=L2(0.01))
+])
 
-for model in models: 
-    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
-                  loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
-                  metrics=['accuracy'])
+
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
+              loss=tf.keras.losses.BinaryCrossentropy(from_logits=True),
+              metrics=['accuracy'])
     
-    print(f'Training {model.name}...')
+print(f'Training {model.name}...')
 
-    model.fit(X_train_scaled, y_train, epochs=50, verbose=0)
+model.fit(X_train_scaled, y_train, epochs=50, verbose=0)
 
-    print('Done!\n')
+print('Done!\n')
 
-    threshold = 0.5
+threshold = 0.5
 
-    yhat = model.predict(X_train_scaled)
-    yhat = tf.math.sigmoid(yhat)
-    yhat = np.where(yhat >= threshold, 1, 0)
-    train_error = np.mean(yhat != y_train)
-    nn_train_error.append(train_error)
+yhat = model.predict(X_train_scaled)
+yhat = tf.math.sigmoid(yhat)
+yhat = np.where(yhat >= threshold, 1, 0)
+train_error = np.mean(yhat != y_train)
+nn_train_error.append(train_error)
 
-    yhat = model.predict(X_cv_scaled)
-    yhat = tf.math.sigmoid(yhat)
-    yhat = np.where(yhat >= threshold, 1,0)
-    cv_error = np.mean(yhat != y_cv)
-    nn_cv_error.append(cv_error)
+yhat = model.predict(X_cv_scaled)
+yhat = tf.math.sigmoid(yhat)
+yhat = np.where(yhat >= threshold, 1,0)
+cv_error = np.mean(yhat != y_cv)
+nn_cv_error.append(cv_error)
 
 for model_nem in range(len(nn_train_error)):
     print(
