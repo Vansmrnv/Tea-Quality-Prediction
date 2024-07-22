@@ -79,3 +79,15 @@ for model_nem in range(len(nn_train_error)):
         f'Model {model_nem+1}: Training set Classification Error: {nn_train_error[model_nem]:.5f}, ' +
         f'CV Set Classification Error: {nn_cv_error[model_nem]:.5f}'
     )
+
+
+
+def eval_mse(y, yhat):
+    m = len(y)
+    err = 0.0
+    for i in range(m): 
+        err_i = ((yhat[i]-y[i])**2)
+        err += err_i
+    err = err/(2*m)
+
+    return(err)
