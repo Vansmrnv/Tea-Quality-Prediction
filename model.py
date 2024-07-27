@@ -81,13 +81,25 @@ for model_nem in range(len(nn_train_error)):
     )
 
 
-
-def eval_mse(y, yhat):
+def eval_cat_err(y, yhat):   # Evaluates categorical error 
     m = len(y)
-    err = 0.0
-    for i in range(m): 
-        err_i = ((yhat[i]-y[i])**2)
-        err += err_i
-    err = err/(2*m)
+    incorrect = 0
+    for i in range(m):
+        if yhat[i] != y[i]:
+            incorrect += 1
+        cerr = incorrect/m
+    return cerr
 
-    return(err)
+model = Sequential(
+    [
+        Dense(units=120, activation='relu', name='L1'),
+        Dense(units=40, activation='relu', name='L2'),
+        Dense(units=6, activation='linear', name='L3')
+    ],name="Complex"
+)
+
+model.compile( 
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+    optimizer=tf.keras.optimizers.Adam(0.01))
+
+model.fit(X_train, y_train, epochs=100)
